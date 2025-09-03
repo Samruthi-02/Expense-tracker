@@ -1,27 +1,27 @@
 const express = require("express");
 const router = express.Router();
 const Savings = require("../models/Savings");
-const authMiddleware = require("../middlewares/auth");
+const auth = require("../middlewares/auth");
 
 // GET all savings for logged-in user
-router.get("/", authMiddleware, async (req, res) => {
-  const savings = await Savings.find({ userId: req.userId });
+router.get("/", auth, async (req, res) => {
+  const savings = await Savings.find({ userId: req.user.id });
   res.json(savings);
 });
 
 // POST new savings
-router.post("/", authMiddleware, async (req, res) => {
+router.post("/", auth, async (req, res) => {
   const { amount, note } = req.body;
-  const newSavings = new Savings({ amount, note, userId: req.userId });
+  const newSavings = new Savings({ amount, note, userId: req.user.id });
   await newSavings.save();
   res.json(newSavings);
 });
 
 // PUT update savings (only user's own)
-router.put("/:id", authMiddleware, async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
   const { amount, note } = req.body;
   const updatedSavings = await Savings.findOneAndUpdate(
-    { _id: req.params.id, userId: req.userId },
+    { _id: req.params.id, userId: req.user.id },
     { amount, note },
     { new: true }
   );
@@ -29,8 +29,8 @@ router.put("/:id", authMiddleware, async (req, res) => {
 });
 
 // DELETE savings (only user's own)
-router.delete("/:id", authMiddleware, async (req, res) => {
-  await Savings.findOneAndDelete({ _id: req.params.id, userId: req.userId });
+router.delete("/:id", auth, async (req, res) => {
+  await Savings.findOneAndDelete({ _id: req.params.id, userId: req.user.id });
   res.json({ message: "Savings deleted" });
 });
 

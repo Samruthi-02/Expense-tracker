@@ -232,7 +232,7 @@ const fetchIncomesReal = async () => {
     headers: token ? { Authorization: `Bearer ${token}` } : {},
   });
   const data = await res.json();
-  setIncomes(data.incomes || []); // 👈 expecting only that user's incomes
+  setIncomes(Array.isArray(data) ? data : []);
 };
 
 // Fetch expenses
@@ -242,7 +242,7 @@ const fetchExpensesReal = async () => {
     headers: token ? { Authorization: `Bearer ${token}` } : {},
   });
   const data = await res.json();
-  setExpenses(data.expenses || []); // 👈 expecting only that user's expenses
+  setExpenses(Array.isArray(data) ? data : []);
 };
 
 
@@ -269,7 +269,7 @@ const addExpense = async (expense) => {
     });
     if (!res.ok) throw new Error("Failed to add expense");
     const newExpense = await res.json();
-    setExpenses([...expenses, newExpense]);
+    setExpenses((prev) => [...prev, newExpense]);
   } catch (err) {
     console.error(err.message);
   }
@@ -315,7 +315,7 @@ const addIncome = async (income) => {
     body: JSON.stringify(income),
   });
   const newIncome = await res.json();
-  setIncomes([...incomes, newIncome]);
+  setIncomes((prev) => [...prev, newIncome]);
 };
 
 const updateIncome = async (id, updatedIncome) => {
@@ -349,7 +349,8 @@ const deleteIncome = async (id) => {
   return (
     <Router>
       <Routes>
-          <Route path="/login" element={<Login />} />
+        <Route path="/" element={<FrontPage />} />
+        <Route path="/login" element={<LoginWithRedirect />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/header" element={<Header />} />
         <Route

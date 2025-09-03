@@ -1,38 +1,15 @@
 {
-<<<<<<< HEAD
   "name": "expense-tracker",
+  "private": true,
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {
-    "start": "node backend/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Samruthi-02/Expense-tracker.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Samruthi-02/Expense-tracker/issues"
-  },
-  "homepage": "https://github.com/Samruthi-02/Expense-tracker#readme",
-  "description": ""
-=======
-  "name": "my-react-csd",
-  "private": true,
-  "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "start": "node backend/server.js",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "server": "nodemon server.cjs",
-    "client": "vite",
-    "start": "concurrently \"npm run server\" \"npm run client\"",
-    "seed": "node seed.cjs"
+    "preview": "vite preview"
   },
   "dependencies": {
     "axios": "^1.10.0",
@@ -62,9 +39,7 @@
     "tailwindcss": "^4.1.10",
     "vite": "^6.3.5"
   },
-  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
-  "main": "eslint.config.js",
+  "description": "Expense tracker app",
   "author": "",
   "license": "ISC"
->>>>>>> fee21e81ad77559b7fbd50e9c49216088c0fad28
 }

@@ -6,18 +6,23 @@ const Login = ({ onLogin }) => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // ✅ Hardcoded example, replace with API call
-    if (email === "test@gmail.com" && password === "12345") {
-      const token = "dummy-token"; // Replace with real JWT from backend
-      localStorage.setItem("token", token);
-
-      if (onLogin) onLogin({ token });
-      navigate("/tracker");
-    } else {
-      alert("Invalid email or password ❌");
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+      if (res.ok && data.token) {
+        localStorage.setItem("token", data.token);
+        navigate("/tracker");
+      } else {
+        alert(data.message || "Login failed");
+      }
+    } catch (err) {
+      alert("Server error");
     }
   };
 

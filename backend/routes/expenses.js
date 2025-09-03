@@ -3,39 +3,27 @@ const router = express.Router();
 const Expense = require("../models/Expense");
 const jwt = require("jsonwebtoken");
 
-// Middleware to verify JWT and set req.userId
-function authMiddleware(req, res, next) {
-  const authHeader = req.headers.authorization;
-  if (!authHeader) return res.status(401).json({ message: "No token provided" });
-  const token = authHeader.split(" ")[1];
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || "mysecretkey");
-    req.userId = decoded.id;
-    next();
-  } catch (err) {
-    return res.status(401).json({ message: "Invalid token" });
-  }
-}
+const auth = require("../middlewares/auth");
 
 // GET all expenses for logged-in user
-router.get("/", authMiddleware, async (req, res) => {
-  const expenses = await Expense.find({ userId: req.userId });
+router.get("/", auth, async (req, res) => {
+  const expenses = await Expense.find({ userId: req.user.id });
   res.json(expenses);
 });
 
 // POST new expense for logged-in user
-router.post("/", authMiddleware, async (req, res) => {
+router.post("/", auth, async (req, res) => {
   const { title, amount } = req.body;
-  const newExpense = new Expense({ title, amount, userId: req.userId });
+  const newExpense = new Expense({ title, amount, userId: req.user.id });
   await newExpense.save();
   res.json(newExpense);
 });
 
 // PUT update expense (only user's own)
-router.put("/:id", authMiddleware, async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
   const { title, amount } = req.body;
   const updatedExpense = await Expense.findOneAndUpdate(
-    { _id: req.params.id, userId: req.userId },
+    { _id: req.params.id, userId: req.user.id },
     { title, amount },
     { new: true }
   );
@@ -43,8 +31,8 @@ router.put("/:id", authMiddleware, async (req, res) => {
 });
 
 // DELETE expense (only user's own)
-router.delete("/:id", authMiddleware, async (req, res) => {
-  await Expense.findOneAndDelete({ _id: req.params.id, userId: req.userId });
+router.delete("/:id", auth, async (req, res) => {
+  await Expense.findOneAndDelete({ _id: req.params.id, userId: req.user.id });
   res.json({ message: "Expense deleted" });
 });
 

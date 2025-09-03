@@ -1,23 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
 
 const Header = ({ incomeTotal = 0, expenseTotal = 0, savingsTotal = 0 }) => {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
 
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-    navigate("/tracker"); // redirect to dashboard after login
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    alert("Logout successful ✅");
+    navigate("/login");
+    window.location.reload();
   };
 
-
-
-const handleLogout = () => {
-  localStorage.removeItem("token");
-  alert("Logout successful ✅");
-  navigate("/login");
-};
-
+  useEffect(() => {
+    setIsLoggedIn(!!localStorage.getItem("token"));
+  }, []);
 
   return (
     <>
@@ -81,29 +80,7 @@ const handleLogout = () => {
                 Logout
               </button>
             </>
-
-            
-          ) : (
-            <button
-              style={{
-                padding: "10px 24px",
-                background: "#fff",
-                color: "#4f8df5",
-                border: "none",
-                borderRadius: "8px",
-                fontWeight: "bold",
-                cursor: "pointer",
-                fontSize: "0.9rem",
-              }}
-              onClick={handleLogin}
-            >
-              <i
-                className="fas fa-sign-in-alt"
-                style={{ marginRight: "8px" }}
-              ></i>
-              Login
-            </button>
-          )}
+          ) : null}
         </div>
       </nav>
 

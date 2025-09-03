@@ -12,6 +12,8 @@ app.use(express.json());
 // Routes
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/incomes", require("./routes/incomes"));
+app.use("/api/expenses", require("./routes/expenses"));
+app.use("/api/savings", require("./routes/savings"));
 
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/expense-tracker";

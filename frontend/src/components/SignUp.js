@@ -8,16 +8,28 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
-
-    console.log("Name:", name, "Email:", email, "Password:", password);
-    // Add your signup API call here
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        alert("Registration successful! Please login.");
+        window.location.href = "/login";
+      } else {
+        alert(data.message || "Registration failed");
+      }
+    } catch (err) {
+      alert("Server error");
+    }
   };
 
   return (
@@ -161,10 +173,9 @@ const Signup = () => {
           />
           <button type="submit">Sign Up</button>
         </form>
-      // Replace this line in your signup-card
-<p className="login-text">
-  Already have an account? <Link to="/login">Login</Link>
-</p>
+        <p className="login-text">
+          Already have an account? <Link to="/login">Login</Link>
+        </p>
       </div>
     </>
   );

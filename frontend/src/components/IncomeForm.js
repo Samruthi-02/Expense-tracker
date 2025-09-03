@@ -15,7 +15,7 @@ const IncomeForm = ({ addIncome, editingIncome, updateIncome }) => {
     e.preventDefault();
     if (!source || !amount) return;
 
-    const income = { source, amount };
+    const income = { source, amount: Number(amount) };
 
     if (editingIncome) {
       updateIncome(editingIncome._id, income);

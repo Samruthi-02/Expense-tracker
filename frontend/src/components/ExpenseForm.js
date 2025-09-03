@@ -15,7 +15,7 @@ const ExpenseForm = ({ addExpense, editingExpense, updateExpense }) => {
     e.preventDefault();
     if (!title || !amount) return;
 
-    const expense = { title, amount };
+    const expense = { title, amount: Number(amount) };
 
     if (editingExpense) {
       updateExpense(editingExpense._id, expense);
