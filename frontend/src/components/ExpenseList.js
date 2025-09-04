@@ -34,12 +34,12 @@ const ExpenseList = ({ expenses, onEdit, onDelete }) => {
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       {expenses.map((exp) => (
         <div key={exp._id} style={cardStyle} className="expense-card">
-          <span style={{ fontSize: '1.1rem', color: '#b21f1f', fontWeight: 600 }}>
-            <strong>{exp.title}</strong> <span style={{ color: '#d32f2f', fontWeight: 700 }}>₹{exp.amount}</span>
+          <span style={{ fontSize: '1.1rem', color: '#125675ff', fontWeight: 600 }}>
+            <strong>{exp.title}</strong> <span style={{ color: '#1a1361ff', fontWeight: 700 }}>₹{exp.amount}</span>
           </span>
           <div>
             <button
-              style={{ ...btnStyle, background: 'linear-gradient(90deg, #ff9800, #d32f2f)', color: '#fff' }}
+              style={{ ...btnStyle, background: 'linear-gradient(90deg, #125675ff, #1a1361ff)', color: '#fff' }}
               className="animated-btn"
               onClick={() => onEdit(exp)}
               onMouseDown={e => e.currentTarget.style.transform = 'scale(0.95)'}
@@ -47,7 +47,7 @@ const ExpenseList = ({ expenses, onEdit, onDelete }) => {
               onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
             >Edit</button>
             <button
-              style={{ ...btnStyle, background: 'linear-gradient(90deg, #d32f2f, #ff6a6a)', color: '#fff' }}
+              style={{ ...btnStyle, background: 'linear-gradient(90deg, #18b3e2ff, #063a52ff)', color: '#fff' }}
               className="animated-btn"
               onClick={() => onDelete(exp._id)}
               onMouseDown={e => e.currentTarget.style.transform = 'scale(0.95)'}

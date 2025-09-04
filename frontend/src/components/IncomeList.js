@@ -38,7 +38,7 @@ const IncomeList = ({ incomes, onEdit, onDelete }) => {
           </span>
           <div>
             <button
-              style={{ ...btnStyle, background: 'linear-gradient(90deg, #00c853, #4f8df5)', color: '#fff' }}
+              style={{ ...btnStyle, background: 'linear-gradient(90deg, #5b8bf3ff, #0c306dff)', color: '#fff' }}
               className="animated-btn"
               onClick={() => onEdit(inc)}
               onMouseDown={e => e.currentTarget.style.transform = 'scale(0.95)'}
@@ -46,7 +46,7 @@ const IncomeList = ({ incomes, onEdit, onDelete }) => {
               onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
             >Edit</button>
             <button
-              style={{ ...btnStyle, background: 'linear-gradient(90deg, #d32f2f, #ff6a6a)', color: '#fff' }}
+              style={{ ...btnStyle, background: 'linear-gradient(90deg, #3b92c5ff, rgba(11, 48, 83, 1)',color: '#fff' }}
               className="animated-btn"
               onClick={() => onDelete(inc._id)}
               onMouseDown={e => e.currentTarget.style.transform = 'scale(0.95)'}
